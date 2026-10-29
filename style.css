@@ -1,0 +1,72 @@
+@keyframes bgshift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes rowin { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes popin { from { opacity: 0; transform: translateY(24px) scale(.92); } to { opacity: 1; transform: none; } }
+@keyframes slidein { from { opacity: 0; transform: translateX(-26px); } to { opacity: 1; transform: none; } }
+@keyframes zoomin { from { opacity: 0; transform: scale(.85); } to { opacity: 1; transform: none; } }
+@keyframes pulse { 0%, 100% { box-shadow: 0 3px 8px rgba(249,115,22,.35); } 50% { box-shadow: 0 0 0 7px rgba(249,115,22,.15), 0 3px 18px rgba(249,115,22,.7); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+@keyframes glow { 0%, 100% { box-shadow: inset 0 0 0 0 rgba(245,158,11,0); } 50% { box-shadow: inset 0 0 0 3px rgba(245,158,11,.9); } }
+
+body { font-family: sans-serif; margin: 0; padding: 12px; min-height: 100vh; color: #1f2937; background: linear-gradient(135deg, #e0f2fe, #ede9fe, #fce7f3, #dcfce7); background-size: 300% 300%; background-attachment: fixed; animation: bgshift 18s ease infinite; }
+h1 { font-size: 22px; text-align: center; color: #4338ca; animation: slidein .6s ease backwards; }
+h1::before { content: "📝 "; }
+h2 { color: #4338ca; }
+
+button { font-size: 16px; padding: 12px; margin: 4px 0; width: 100%; color: #fff; border: 0; border-radius: 12px; background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 3px 8px rgba(79,70,229,.3); animation: popin .5s ease backwards; transition: transform .15s, filter .15s; }
+button:hover { filter: brightness(1.1); }
+button:active { transform: scale(.95); }
+button[onclick^="startCam"] { background: linear-gradient(135deg, #0ea5e9, #06b6d4); }
+button[onclick^="snap"] { background: linear-gradient(135deg, #f43f5e, #fb7185); }
+button[onclick^="stopCam"], button[onclick^="backFromResults"] { background: linear-gradient(135deg, #64748b, #94a3b8); }
+button[onclick^="scan"] { background: linear-gradient(135deg, #f97316, #f59e0b); font-weight: bold; animation: popin .5s ease backwards, pulse 2.2s ease-in-out 1s infinite; }
+button[onclick^="addSample"], button[onclick^="addRow"] { background: linear-gradient(135deg, #14b8a6, #10b981); }
+button[onclick^="clearRows"] { background: linear-gradient(135deg, #ef4444, #f87171); }
+button[onclick^="copyCol"] { background: linear-gradient(135deg, #16a34a, #22c55e); }
+button[onclick^="downloadCsv"] { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+.mini { width: auto; padding: 4px 8px; margin: 0 0 0 4px; font-size: 14px; background: #fff; color: #4f46e5; box-shadow: none; }
+body > button:nth-of-type(2) { animation-delay: .08s; }
+body > button:nth-of-type(3) { animation-delay: .16s; }
+body > button:nth-of-type(4) { animation-delay: .24s; }
+body > button:nth-of-type(5) { animation-delay: .32s; }
+body > button:nth-of-type(6) { animation-delay: .4s; }
+#results > button:nth-of-type(2) { animation-delay: .1s; }
+#results > button:nth-of-type(3) { animation-delay: .2s; }
+#results > button:nth-of-type(4) { animation-delay: .3s; }
+#results > button:nth-of-type(5) { animation-delay: .4s; }
+
+input[type=file] { width: 100%; margin: 8px 0; background: #fff; border-radius: 10px; padding: 8px; box-sizing: border-box; animation: slidein .5s ease backwards .2s; }
+input:focus { outline: 2px solid #8b5cf6; box-shadow: 0 0 0 4px rgba(139,92,246,.2); }
+#camBox { display: none; animation: zoomin .4s ease; }
+#video, #preview { width: 100%; border-radius: 14px; }
+#preview { display: none; margin-top: 8px; animation: zoomin .45s ease; }
+#status, #rstatus { margin: 8px 0; background: rgba(255,255,255,.75); padding: 8px 12px; border-radius: 10px; animation: slidein .35s ease; }
+#status:empty, #rstatus:empty { display: none; }
+#warn { margin: 8px 0; color: #b00020; font-weight: bold; }
+#warn:not(:empty) { animation: shake .45s ease; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(99,102,241,.2); animation: zoomin .5s ease backwards; }
+td, th { border: 1px solid #c7d2fe; padding: 4px; }
+th { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; }
+td input { width: 100%; box-sizing: border-box; font-size: 15px; border: 0; padding: 6px; background: transparent; }
+td input.bad { background: #f8c9c9; }
+#tbl tbody tr { animation: rowin .35s ease both; }
+#tbl tbody tr:nth-child(even) { background: #f5f3ff; }
+#tbl tbody tr:nth-child(2) { animation-delay: .06s; }
+#tbl tbody tr:nth-child(3) { animation-delay: .12s; }
+#tbl tbody tr:nth-child(4) { animation-delay: .18s; }
+#tbl tbody tr:nth-child(5) { animation-delay: .24s; }
+#tbl tbody tr:nth-child(n+6) { animation-delay: .3s; }
+#tbl tbody tr.speaking { background: #fde68a !important; }
+#tbl tbody tr.speaking td { animation: glow 1s ease-in-out infinite; }
+
+#subOverlay { display: none; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; padding: 20px; color: #fff; background: linear-gradient(135deg, #6366f1, #8b5cf6 45%, #ec4899); }
+#subOverlay.show { display: flex; animation: rowin .4s ease backwards; }
+.subCard { width: 100%; max-width: 360px; text-align: center; background: rgba(255,255,255,.16); border-radius: 22px; padding: 26px 18px; animation: popin .6s ease backwards .15s; }
+.subCard h2 { color: #fff; animation: slidein .5s ease backwards .3s; }
+.subCard input { width: 100%; box-sizing: border-box; font-size: 20px; padding: 12px; margin: 12px 0; text-align: center; background: #fff; color: #1f2937; border: 0; border-radius: 12px; animation: slidein .5s ease backwards .4s; }
+.subCard button { background: #fff; color: #4f46e5; animation: none; }
+.subCard button:last-child { background: rgba(255,255,255,.25); color: #fff; }
+
+#results { display: none; position: fixed; inset: 0; z-index: 50; overflow-y: auto; padding: 12px; background: linear-gradient(160deg, #ecfeff, #eef2ff 50%, #fdf2f8); }
+#results.show { display: block; animation: rowin .35s ease backwards; }
+#results h2 { animation: slidein .5s ease backwards; }
