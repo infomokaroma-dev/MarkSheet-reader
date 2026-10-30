@@ -1,57 +1,62 @@
 <!DOCTYPE html>
-<html lang="bn">
-<head><link rel="manifest" href="manifest.json">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang='bn'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
 <title>মার্কশিট স্ক্যানার</title>
-<link rel="stylesheet" href="style.css?v=11">
+<link rel='manifest' href='manifest.json'>
+<link rel='stylesheet' href='style.css?v=13'>
 </head>
 <body>
 
-<div id="subOverlay">
-  <div class="subCard">
+<div id='subOverlay'>
+  <div class='subCard'>
     <h2>আজ কোন সাবজেক্ট নিয়ে কাজ করবেন?</h2>
-    <input type="text" id="subInput" placeholder="যেমন: ইংরেজি">
-    <button onclick="subStart(true)">এগিয়ে যান</button>
-    <button onclick="subStart(false)">এড়িয়ে যান</button>
+    <div id='subList'></div>
+    <div id='otherBox'>
+      <input type='text' id='subInput' placeholder='সাবজেক্টের নাম লিখুন'>
+      <button onclick='pickOther()'>এগিয়ে যান</button>
+    </div>
+    <button class='skip' onclick='subStart(false)'>এড়িয়ে যান</button>
   </div>
 </div>
 
-<h1 id="title">মার্কশিট স্ক্যানার</h1>
+<h1 id='title'>মার্কশিট স্ক্যানার</h1>
 
-<button onclick="setKey()">API key বসান / বদলান</button>
-<button onclick="startCam()">📷 ক্যামেরা চালু করুন</button>
-<div id="camBox">
-  <video id="video" autoplay playsinline muted></video>
-  <button onclick="snap()">ছবি তুলুন</button>
-  <button onclick="stopCam()">ক্যামেরা বন্ধ করুন</button>
+<button onclick='setKey()'>API key বসান / বদলান</button>
+<button onclick='startCam()'>📷 ক্যামেরা চালু করুন</button>
+<div id='camBox'>
+  <video id='video' autoplay playsinline muted></video>
+  <button onclick='snap()'>ছবি তুলুন</button>
+  <button onclick='stopCam()'>ক্যামেরা বন্ধ করুন</button>
 </div>
-<img id="preview" alt="তোলা ছবি">
+<img id='preview' alt='তোলা ছবি'>
 
 <p>অথবা গ্যালারি থেকে ছবি বেছে নিন:</p>
-<input type="file" id="photo" accept="image/*" onchange="fileChosen()">
+<input type='file' id='photo' accept='image/*' onchange='fileChosen()'>
 
-<button onclick="scan()">ছবি থেকে নম্বর পড়ুন</button>
-<button onclick="addRow()">➕ নিজে টাইপ করে সারি যোগ করুন (টেস্ট)</button>
-<button onclick="addSample()">🧪 নমুনা ডেটা দিন (টেস্ট)</button>
-<button onclick="clearRows()">🗑️ সব সারি মুছুন</button>
-<div id="status"></div>
+<button onclick='scan()'>ছবি থেকে নম্বর পড়ুন</button>
+<button onclick='addRow()'>➕ নিজে টাইপ করে সারি যোগ করুন (টেস্ট)</button>
+<button onclick='addSample()'>🧪 নমুনা ডেটা দিন (টেস্ট)</button>
+<button onclick='clearRows()'>🗑️ সব সারি মুছুন</button>
+<div id='status'></div>
 
-<div id="results">
-  <h2 id="resTitle">ফলাফল</h2>
-  <div id="rstatus"></div>
-  <div id="warn"></div>
-  <table id="tbl">
-    <thead><tr><th>রোল</th><th>নাম</th><th>এমসিকিউ <button class="mini" id="vMcq" onclick="voiceCol('mcq')">🔊</button></th><th>সিকিউ <button class="mini" id="vCq" onclick="voiceCol('cq')">🔊</button></th></tr></thead>
+<div id='results'>
+  <h2 id='resTitle'>ফলাফল</h2>
+  <div id='rstatus'></div>
+  <div id='warn'></div>
+  <table id='tbl'>
+    <thead><tr><th>রোল</th><th>নাম</th><th>এমসিকিউ <button class='mini' id='vMcq' onclick='voiceCol(2)'>🔊</button></th><th>সিকিউ <button class='mini' id='vCq' onclick='voiceCol(3)'>🔊</button></th><th><span id='totLabel'>মোট</span> <button class='mini' id='vTot' onclick='voiceCol(4)'>🔊</button></th></tr></thead>
     <tbody></tbody>
   </table>
-  <button onclick="copyCol('mcq')">📋 এমসিকিউ কপি করুন</button>
-  <button onclick="copyCol('cq')">📋 সিকিউ কপি করুন</button>
-  <button onclick="downloadCsv()">এক্সেল (CSV) ডাউনলোড</button>
-  <button onclick="addRow()">➕ সারি যোগ করুন</button>
-  <button onclick="backFromResults()">⬅️ নতুন ছবি / পেছনে যান</button>
+  <button onclick='copyCol(2)'>📋 এমসিকিউ কপি করুন</button>
+  <button onclick='copyCol(3)'>📋 সিকিউ কপি করুন</button>
+  <button onclick='copyCol(4)'>📋 মোট নম্বর কপি করুন</button>
+  <button onclick='downloadCsv()'>এক্সেল (CSV) ডাউনলোড</button>
+  <button onclick='addRow()'>➕ সারি যোগ করুন</button>
+  <button onclick='backFromResults()'>⬅️ নতুন ছবি / পেছনে যান</button>
 </div>
 
-<script src="app.js?v=11" onerror="alert('app.js ফাইল পাওয়া যায়নি। গিটহাবে app.js নামে ফাইল বানিয়েছেন?')"></script>
+<script src='app.js?v=13' onerror='alert(`app.js ফাইল পাওয়া যায়নি। গিটহাবে app.js নামে ফাইল বানিয়েছেন?`)'></script>
 </body>
 </html>
