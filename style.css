@@ -48,7 +48,7 @@ table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #f
 td, th { border: 1px solid #c7d2fe; padding: 4px; }
 th { background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; }
 td input { width: 100%; box-sizing: border-box; font-size: 15px; border: 0; padding: 6px; background: transparent; }
-td input.bad { background: #f8c9c9; }
+td input.bad { background: #f8c9c9; } td input.tot { font-weight: bold; color: #4338ca; } body.single #tbl th:nth-child(3), body.single #tbl td:nth-child(3), body.single #tbl th:nth-child(4), body.single #tbl td:nth-child(4) { display: none; } body.single button[onclick="copyCol(2)"], body.single button[onclick="copyCol(3)"] { display: none; }
 #tbl tbody tr { animation: rowin .35s ease both; }
 #tbl tbody tr:nth-child(even) { background: #f5f3ff; }
 #tbl tbody tr:nth-child(2) { animation-delay: .06s; }
@@ -61,11 +61,11 @@ td input.bad { background: #f8c9c9; }
 
 #subOverlay { display: none; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; padding: 20px; color: #fff; background: linear-gradient(135deg, #6366f1, #8b5cf6 45%, #ec4899); }
 #subOverlay.show { display: flex; animation: rowin .4s ease backwards; }
-.subCard { width: 100%; max-width: 360px; text-align: center; background: rgba(255,255,255,.16); border-radius: 22px; padding: 26px 18px; animation: popin .6s ease backwards .15s; }
+.subCard { width: 100%; max-width: 360px; text-align: center; background: rgba(255,255,255,.16); border-radius: 22px; padding: 26px 18px; max-height: 92vh; overflow-y: auto; animation: popin .6s ease backwards .15s; }
 .subCard h2 { color: #fff; animation: slidein .5s ease backwards .3s; }
 .subCard input { width: 100%; box-sizing: border-box; font-size: 20px; padding: 12px; margin: 12px 0; text-align: center; background: #fff; color: #1f2937; border: 0; border-radius: 12px; animation: slidein .5s ease backwards .4s; }
-.subCard button { background: #fff; color: #4f46e5; animation: none; }
-.subCard button:last-child { background: rgba(255,255,255,.25); color: #fff; }
+.subCard button { background: #fff; color: #4f46e5; animation: none; } #subList { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0; } #subList button { margin: 0; font-size: 15px; padding: 10px 6px; } #subList button.other { grid-column: 1 / -1; background: #fde68a; color: #92400e; } #otherBox { display: none; } #otherBox.show { display: block; }
+.subCard button.skip { background: rgba(255,255,255,.25); color: #fff; margin-top: 10px; }
 
 #results { display: none; position: fixed; inset: 0; z-index: 50; overflow-y: auto; padding: 12px; background: linear-gradient(160deg, #ecfeff, #eef2ff 50%, #fdf2f8); }
 #results.show { display: block; animation: rowin .35s ease backwards; }
