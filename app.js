@@ -108,7 +108,7 @@ async function scan() {
   if (!imageB64) { alert('আগে ছবি তুলুন বা বেছে নিন'); return; }
   if (!askMax()) return;
   document.getElementById('warn').textContent = '';
-  const t0 = Date.now();
+  const t0 = Date.now(); bearBusy = true; bear('think', 'পড়ছি... 🤔');
   const timer = setInterval(() => {
     setStatus('পড়া হচ্ছে, একটু অপেক্ষা করুন... ' + Math.floor((Date.now() - t0) / 1000) + ' সেকেন্ড');
   }, 500);
@@ -132,14 +132,14 @@ async function scan() {
     if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
       throw new Error('কোনো উত্তর আসেনি। আরেকটু পরিষ্কার ছবি দিয়ে আবার চেষ্টা করুন।'); }
     const rows = JSON.parse(data.candidates[0].content.parts[0].text);
-    fillTable(rows);
+    fillTable(rows); bear('happy', 'দারুণ! হয়ে গেছে 🎉', 3500);
     setStatus(rows.length + ' টি সারি পাওয়া গেছে। ফাঁকা ঘরে A বসেছে। ভুল থাকলে ঘরে চাপ দিয়ে ঠিক করুন।');
     checkLimits();
     showResults();
   } catch (e) {
-    setStatus('সমস্যা হয়েছে: ' + e.message);
+    setStatus('সমস্যা হয়েছে: ' + e.message); bear('sad', 'ইশ! একটা সমস্যা হয়েছে 😢', 4500);
   } finally {
-    clearInterval(timer);
+    clearInterval(timer); bearBusy = false;
   }
 }
 
@@ -361,4 +361,4 @@ function downloadCsv() {
 }
 
 buildSubjects();
-document.getElementById('subOverlay').classList.add('show');
+document.getElementById('subOverlay').classList.add('show'); let bearBusy = false; let bearTimer = null; function bear(state, say, ms) { const b = document.getElementById('bear'); if (!b) return; b.className = state; document.getElementById('bearSay').textContent = say || ''; clearTimeout(bearTimer); if (ms) bearTimer = setTimeout(function () { bear('peek', ''); }, ms); } document.addEventListener('click', function (e) { if (bearBusy) return; if (e.target.closest && e.target.closest('button')) bear('wave', '', 1400); }); setTimeout(function () { bear('wave', 'নমস্কার! 🐻', 3000); }, 3400);
