@@ -4,10 +4,10 @@
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <title>মার্কশিট স্ক্যানার</title>
-<link rel='manifest' href='manifest.json'>
-<link rel='stylesheet' href='style.css?v=13'>
+<link rel='manifest' href='manifest.json'><link rel='preconnect' href='https://fonts.googleapis.com'><link href='https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap' rel='stylesheet'>
+<link rel='stylesheet' href='style.css?v=16'>
 </head>
-<body>
+<body><div id='splash' onclick='this.remove()'><svg viewBox='0 0 320 140' width='86%' style='max-width:340px'><text class='hw' x='160' y='92' text-anchor='middle'><tspan class='l1'>H</tspan><tspan class='l2'>e</tspan><tspan class='l3'>l</tspan><tspan class='l4'>l</tspan><tspan class='l5'>o</tspan></text></svg><div id='splashSub'>মার্কশিট স্ক্যানার</div><div class='sb sb1'>হ্যালো! 👋</div><div class='sb sb2'>চলুন শুরু করি! 🎉</div><svg class='sBear' viewBox='0 0 120 120'><g class='sArm'><ellipse cx='98' cy='88' rx='9' ry='17' fill='#a8672f'/></g><ellipse cx='60' cy='108' rx='34' ry='26' fill='#b9773e'/><ellipse cx='60' cy='112' rx='20' ry='17' fill='#f3d3a8'/><ellipse cx='22' cy='88' rx='9' ry='17' fill='#a8672f'/><circle cx='28' cy='30' r='14' fill='#b9773e'/><circle cx='28' cy='30' r='7' fill='#f3a6a6'/><circle cx='92' cy='30' r='14' fill='#b9773e'/><circle cx='92' cy='30' r='7' fill='#f3a6a6'/><circle cx='60' cy='56' r='38' fill='#b9773e'/><ellipse cx='60' cy='68' rx='17' ry='13' fill='#f3d3a8'/><ellipse cx='60' cy='62' rx='6' ry='4.5' fill='#3b2314'/><circle cx='46' cy='50' r='5' fill='#3b2314'/><circle cx='74' cy='50' r='5' fill='#3b2314'/><circle cx='44.5' cy='48.5' r='1.7' fill='#fff'/><circle cx='72.5' cy='48.5' r='1.7' fill='#fff'/><circle cx='36' cy='62' r='5' fill='#f59ab0' opacity='.6'/><circle cx='84' cy='62' r='5' fill='#f59ab0' opacity='.6'/><path class='sSmile' d='M52 72 Q60 80 68 72' stroke='#3b2314' stroke-width='2.5' fill='none' stroke-linecap='round'/><path class='sBig' d='M50 70 Q60 88 70 70 Z' fill='#7a2e2e'/></svg></div>
 
 <div id='subOverlay'>
   <div class='subCard'>
@@ -57,6 +57,6 @@
   <button onclick='backFromResults()'>⬅️ নতুন ছবি / পেছনে যান</button>
 </div>
 
-<script src='app.js?v=13' onerror='alert(`app.js ফাইল পাওয়া যায়নি। গিটহাবে app.js নামে ফাইল বানিয়েছেন?`)'></script>
+<div id='bear' class='peek'><div id='bearSay'></div><svg viewBox='0 0 120 120' width='100' height='100'><g id='bArm'><ellipse cx='98' cy='88' rx='9' ry='17' fill='#a8672f'/></g><ellipse cx='60' cy='108' rx='34' ry='26' fill='#b9773e'/><ellipse cx='60' cy='112' rx='20' ry='17' fill='#f3d3a8'/><ellipse cx='22' cy='88' rx='9' ry='17' fill='#a8672f'/><circle cx='28' cy='30' r='14' fill='#b9773e'/><circle cx='28' cy='30' r='7' fill='#f3a6a6'/><circle cx='92' cy='30' r='14' fill='#b9773e'/><circle cx='92' cy='30' r='7' fill='#f3a6a6'/><circle cx='60' cy='56' r='38' fill='#b9773e'/><ellipse cx='60' cy='68' rx='17' ry='13' fill='#f3d3a8'/><ellipse cx='60' cy='62' rx='6' ry='4.5' fill='#3b2314'/><g id='bEyes'><circle cx='46' cy='50' r='5' fill='#3b2314'/><circle cx='74' cy='50' r='5' fill='#3b2314'/><circle cx='44.5' cy='48.5' r='1.7' fill='#fff'/><circle cx='72.5' cy='48.5' r='1.7' fill='#fff'/></g><circle cx='36' cy='62' r='5' fill='#f59ab0' opacity='.6'/><circle cx='84' cy='62' r='5' fill='#f59ab0' opacity='.6'/><path id='bSmile' d='M52 72 Q60 80 68 72' stroke='#3b2314' stroke-width='2.5' fill='none' stroke-linecap='round'/><path id='bSad' d='M52 77 Q60 69 68 77' stroke='#3b2314' stroke-width='2.5' fill='none' stroke-linecap='round'/><path id='bBig' d='M50 70 Q60 88 70 70 Z' fill='#7a2e2e'/><ellipse id='bTear' cx='45' cy='60' rx='2.5' ry='4' fill='#7ec8ff'/></svg></div><script src='app.js?v=15' onerror='alert(`app.js ফাইল পাওয়া যায়নি। গিটহাবে app.js নামে ফাইল বানিয়েছেন?`)'></script>
 </body>
 </html>
