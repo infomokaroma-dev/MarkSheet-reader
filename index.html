@@ -4,41 +4,73 @@
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <title>মার্কশিট স্ক্যানার</title>
-<link rel='manifest' href='manifest.json'><link rel='preconnect' href='https://fonts.googleapis.com'><link href='https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap' rel='stylesheet'>
-<link rel='stylesheet' href='style.css?v=16'>
+<link rel='manifest' href='manifest.json'>
+<link rel='preconnect' href='https://fonts.googleapis.com'>
+<link href='https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap' rel='stylesheet'>
+<link rel='stylesheet' href='style.css?v=17'>
 </head>
-<body><div id='splash' onclick='this.remove()'><svg viewBox='0 0 320 140' width='86%' style='max-width:340px'><text class='hw' x='160' y='92' text-anchor='middle'><tspan class='l1'>H</tspan><tspan class='l2'>e</tspan><tspan class='l3'>l</tspan><tspan class='l4'>l</tspan><tspan class='l5'>o</tspan></text></svg><div id='splashSub'>মার্কশিট স্ক্যানার</div><div class='sb sb1'>হ্যালো! 👋</div><div class='sb sb2'>চলুন শুরু করি! 🎉</div><svg class='sBear' viewBox='0 0 120 120'><g class='sArm'><ellipse cx='98' cy='88' rx='9' ry='17' fill='#a8672f'/></g><ellipse cx='60' cy='108' rx='34' ry='26' fill='#b9773e'/><ellipse cx='60' cy='112' rx='20' ry='17' fill='#f3d3a8'/><ellipse cx='22' cy='88' rx='9' ry='17' fill='#a8672f'/><circle cx='28' cy='30' r='14' fill='#b9773e'/><circle cx='28' cy='30' r='7' fill='#f3a6a6'/><circle cx='92' cy='30' r='14' fill='#b9773e'/><circle cx='92' cy='30' r='7' fill='#f3a6a6'/><circle cx='60' cy='56' r='38' fill='#b9773e'/><ellipse cx='60' cy='68' rx='17' ry='13' fill='#f3d3a8'/><ellipse cx='60' cy='62' rx='6' ry='4.5' fill='#3b2314'/><circle cx='46' cy='50' r='5' fill='#3b2314'/><circle cx='74' cy='50' r='5' fill='#3b2314'/><circle cx='44.5' cy='48.5' r='1.7' fill='#fff'/><circle cx='72.5' cy='48.5' r='1.7' fill='#fff'/><circle cx='36' cy='62' r='5' fill='#f59ab0' opacity='.6'/><circle cx='84' cy='62' r='5' fill='#f59ab0' opacity='.6'/><path class='sSmile' d='M52 72 Q60 80 68 72' stroke='#3b2314' stroke-width='2.5' fill='none' stroke-linecap='round'/><path class='sBig' d='M50 70 Q60 88 70 70 Z' fill='#7a2e2e'/></svg></div>
+<body>
+<div id='splash' onclick='this.remove()'>
+  <svg viewBox='0 0 320 140' width='86%' style='max-width: 340px'>
+    <text class='hw' x='160' y='92' text-anchor='middle'>
+      <tspan class='l1'>H</tspan><tspan class='l2'>e</tspan><tspan class='l3'>l</tspan><tspan class='l4'>l</tspan><tspan class='l5'>o</tspan>
+    </text>
+  </svg>
+  <div id='splashSub'>মার্কশিট স্ক্যানার</div>
+  <div class='sb sb1'>হ্যালো! 🐼</div>
+  <div class='sb sb2'>চলুন শুরু করি! ✨</div>
+  <svg class='sBear' viewBox='0 0 120 120'>
+    <g class='sArm'><ellipse cx='98' cy='88' rx='10' ry='18' fill='#1e293b'/></g>
+    <ellipse cx='60' cy='108' rx='34' ry='26' fill='#ffffff' stroke='#e2e8f0' stroke-width='2'/>
+    <ellipse cx='60' cy='112' rx='20' ry='17' fill='#f1f5f9'/>
+    <ellipse cx='22' cy='88' rx='10' ry='18' fill='#1e293b'/>
+    <circle cx='26' cy='28' r='14' fill='#1e293b'/>
+    <circle cx='26' cy='28' r='7' fill='#475569'/>
+    <circle cx='94' cy='28' r='14' fill='#1e293b'/>
+    <circle cx='94' cy='28' r='7' fill='#475569'/>
+    <circle cx='60' cy='56' r='38' fill='#ffffff' stroke='#e2e8f0' stroke-width='2'/>
+    <ellipse cx='44' cy='51' rx='11' ry='14' transform='rotate(-18 44 51)' fill='#1e293b'/>
+    <ellipse cx='76' cy='51' rx='11' ry='14' transform='rotate(18 76 51)' fill='#1e293b'/>
+    <circle cx='45' cy='49' r='4.5' fill='#fff'/>
+    <circle cx='75' cy='49' r='4.5' fill='#fff'/>
+    <circle cx='44' cy='47.5' r='2' fill='#1e293b'/>
+    <circle cx='74' cy='47.5' r='2' fill='#1e293b'/>
+    <circle cx='43' cy='46.5' r='1' fill='#fff'/>
+    <circle cx='73' cy='46.5' r='1' fill='#fff'/>
+    <ellipse cx='60' cy='62' rx='6' ry='4.2' fill='#1e293b'/>
+    <circle cx='33' cy='63' r='6' fill='#fda4af' opacity='.75'/>
+    <circle cx='87' cy='63' r='6' fill='#fda4af' opacity='.75'/>
+    <path class='sSmile' d='M52 71 Q60 79 68 71' stroke='#1e293b' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+    <path class='sBig' d='M50 70 Q60 88 70 70 Z' fill='#ef4444'/>
+  </svg>
+</div>
 
 <div id='subOverlay'>
   <div class='subCard'>
-    <h2>আজ কোন সাবজেক্ট নিয়ে কাজ করবেন?</h2>
+    <h2>আজ কোন সাবজেক্ট নিয়ে কাজ করবেন?</h2>
     <div id='subList'></div>
     <div id='otherBox'>
       <input type='text' id='subInput' placeholder='সাবজেক্টের নাম লিখুন'>
-      <button onclick='pickOther()'>এগিয়ে যান</button>
+      <button onclick='pickOther()'>এগিয়ে যান</button>
     </div>
-    <button class='skip' onclick='subStart(false)'>এড়িয়ে যান</button>
+    <button class='skip' onclick='subStart(false)'>এড়িয়ে যান</button>
   </div>
 </div>
 
 <h1 id='title'>মার্কশিট স্ক্যানার</h1>
-
-<button onclick='setKey()'>API key বসান / বদলান</button>
-<button onclick='startCam()'>📷 ক্যামেরা চালু করুন</button>
+<button onclick='startCam()'>ক্যামেরা চালু করুন</button>
 <div id='camBox'>
   <video id='video' autoplay playsinline muted></video>
   <button onclick='snap()'>ছবি তুলুন</button>
   <button onclick='stopCam()'>ক্যামেরা বন্ধ করুন</button>
 </div>
 <img id='preview' alt='তোলা ছবি'>
-
 <p>অথবা গ্যালারি থেকে ছবি বেছে নিন:</p>
 <input type='file' id='photo' accept='image/*' onchange='fileChosen()'>
-
 <button onclick='scan()'>ছবি থেকে নম্বর পড়ুন</button>
-<button onclick='addRow()'>➕ নিজে টাইপ করে সারি যোগ করুন (টেস্ট)</button>
-<button onclick='addSample()'>🧪 নমুনা ডেটা দিন (টেস্ট)</button>
-<button onclick='clearRows()'>🗑️ সব সারি মুছুন</button>
+<button onclick='addRow()'>নিজে টাইপ করে সারি যোগ করুন (টেস্ট)</button>
+<button onclick='addSample()'>নমুনা ডেটা দিন (টেস্ট)</button>
+<button onclick='clearRows()'>সব সারি মুছুন</button>
 <div id='status'></div>
 
 <div id='results'>
@@ -46,17 +78,72 @@
   <div id='rstatus'></div>
   <div id='warn'></div>
   <table id='tbl'>
-    <thead><tr><th>রোল</th><th>নাম</th><th>এমসিকিউ <button class='mini' id='vMcq' onclick='voiceCol(2)'>🔊</button></th><th>সিকিউ <button class='mini' id='vCq' onclick='voiceCol(3)'>🔊</button></th><th><span id='totLabel'>মোট</span> <button class='mini' id='vTot' onclick='voiceCol(4)'>🔊</button></th></tr></thead>
+    <thead>
+      <tr>
+        <th>রোল</th>
+        <th>নাম</th>
+        <th>এমসিকিউ <button class='mini' id='vMcq' onclick='voiceCol(2)'>🔊</button></th>
+        <th>সিকিউ <button class='mini' id='vCq' onclick='voiceCol(3)'>🔊</button></th>
+        <th><span id='totLabel'>মোট</span> <button class='mini' id='vTot' onclick='voiceCol(4)'>🔊</button></th>
+      </tr>
+    </thead>
     <tbody></tbody>
   </table>
-  <button onclick='copyCol(2)'>📋 এমসিকিউ কপি করুন</button>
-  <button onclick='copyCol(3)'>📋 সিকিউ কপি করুন</button>
-  <button onclick='copyCol(4)'>📋 মোট নম্বর কপি করুন</button>
+  <button onclick='copyCol(2)'>এমসিকিউ কপি করুন</button>
+  <button onclick='copyCol(3)'>সিকিউ কপি করুন</button>
+  <button onclick='copyCol(4)'>মোট নম্বর কপি করুন</button>
   <button onclick='downloadCsv()'>এক্সেল (CSV) ডাউনলোড</button>
-  <button onclick='addRow()'>➕ সারি যোগ করুন</button>
-  <button onclick='backFromResults()'>⬅️ নতুন ছবি / পেছনে যান</button>
+  <button onclick='addRow()'>সারি যোগ করুন</button>
+  <button onclick='backFromResults()'>নতুন ছবি / পেছনে যান</button>
 </div>
 
-<div id='bear' class='peek'><div id='bearSay'></div><svg viewBox='0 0 120 120' width='100' height='100'><g id='bArm'><ellipse cx='98' cy='88' rx='9' ry='17' fill='#a8672f'/></g><ellipse cx='60' cy='108' rx='34' ry='26' fill='#b9773e'/><ellipse cx='60' cy='112' rx='20' ry='17' fill='#f3d3a8'/><ellipse cx='22' cy='88' rx='9' ry='17' fill='#a8672f'/><circle cx='28' cy='30' r='14' fill='#b9773e'/><circle cx='28' cy='30' r='7' fill='#f3a6a6'/><circle cx='92' cy='30' r='14' fill='#b9773e'/><circle cx='92' cy='30' r='7' fill='#f3a6a6'/><circle cx='60' cy='56' r='38' fill='#b9773e'/><ellipse cx='60' cy='68' rx='17' ry='13' fill='#f3d3a8'/><ellipse cx='60' cy='62' rx='6' ry='4.5' fill='#3b2314'/><g id='bEyes'><circle cx='46' cy='50' r='5' fill='#3b2314'/><circle cx='74' cy='50' r='5' fill='#3b2314'/><circle cx='44.5' cy='48.5' r='1.7' fill='#fff'/><circle cx='72.5' cy='48.5' r='1.7' fill='#fff'/></g><circle cx='36' cy='62' r='5' fill='#f59ab0' opacity='.6'/><circle cx='84' cy='62' r='5' fill='#f59ab0' opacity='.6'/><path id='bSmile' d='M52 72 Q60 80 68 72' stroke='#3b2314' stroke-width='2.5' fill='none' stroke-linecap='round'/><path id='bSad' d='M52 77 Q60 69 68 77' stroke='#3b2314' stroke-width='2.5' fill='none' stroke-linecap='round'/><path id='bBig' d='M50 70 Q60 88 70 70 Z' fill='#7a2e2e'/><ellipse id='bTear' cx='45' cy='60' rx='2.5' ry='4' fill='#7ec8ff'/></svg></div><script src='app.js?v=15' onerror='alert(`app.js ফাইল পাওয়া যায়নি। গিটহাবে app.js নামে ফাইল বানিয়েছেন?`)'></script>
+<div id='bear' class='peek' onclick='pokePanda(event)' title='আমাকে ট্যাপ করো!'>
+  <div id='bearSay'></div>
+  <svg viewBox='0 0 120 120' width='105' height='105'>
+    <g id='bArm'>
+      <ellipse cx='98' cy='88' rx='10' ry='18' fill='#1e293b'/>
+      <g id='bBamboo'>
+        <rect x='94' y='52' width='5' height='36' rx='2.5' fill='#22c55e' transform='rotate(15 96 70)'/>
+        <ellipse cx='106' cy='58' rx='8' ry='3.5' fill='#16a34a' transform='rotate(-25 106 58)'/>
+        <ellipse cx='89' cy='62' rx='7' ry='3' fill='#16a34a' transform='rotate(30 89 62)'/>
+      </g>
+    </g>
+    <ellipse cx='60' cy='108' rx='34' ry='26' fill='#ffffff' stroke='#cbd5e1' stroke-width='2'/>
+    <ellipse cx='60' cy='112' rx='20' ry='17' fill='#f1f5f9'/>
+    <ellipse cx='22' cy='88' rx='10' ry='18' fill='#1e293b'/>
+    <g id='bEars'>
+      <circle cx='26' cy='28' r='14' fill='#1e293b'/>
+      <circle cx='26' cy='28' r='7' fill='#475569'/>
+      <circle cx='94' cy='28' r='14' fill='#1e293b'/>
+      <circle cx='94' cy='28' r='7' fill='#475569'/>
+    </g>
+    <circle cx='60' cy='56' r='38' fill='#ffffff' stroke='#cbd5e1' stroke-width='2'/>
+    <ellipse cx='44' cy='51' rx='11' ry='14' transform='rotate(-18 44 51)' fill='#1e293b'/>
+    <ellipse cx='76' cy='51' rx='11' ry='14' transform='rotate(18 76 51)' fill='#1e293b'/>
+    <g id='bEyes'>
+      <circle cx='45' cy='49' r='5' fill='#ffffff'/>
+      <circle cx='75' cy='49' r='5' fill='#ffffff'/>
+      <circle cx='44.5' cy='48.5' r='2.3' fill='#1e293b'/>
+      <circle cx='74.5' cy='48.5' r='2.3' fill='#1e293b'/>
+      <circle cx='43.5' cy='47.5' r='1.2' fill='#ffffff'/>
+      <circle cx='73.5' cy='47.5' r='1.2' fill='#ffffff'/>
+    </g>
+    <g id='bSleepEyes'>
+      <path d='M39 50 Q45 55 51 50' stroke='#ffffff' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+      <path d='M69 50 Q75 55 81 50' stroke='#ffffff' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+    </g>
+    <ellipse cx='60' cy='62' rx='6' ry='4.2' fill='#1e293b'/>
+    <circle cx='33' cy='63' r='6.5' fill='#fda4af' opacity='.8'/>
+    <circle cx='87' cy='63' r='6.5' fill='#fda4af' opacity='.8'/>
+    <path id='bSmile' d='M52 71 Q60 79 68 71' stroke='#1e293b' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+    <path id='bSad' d='M52 77 Q60 69 68 77' stroke='#1e293b' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+    <path id='bBig' d='M50 70 Q60 88 70 70 Z' fill='#ef4444'/>
+    <ellipse id='bTear' cx='43' cy='60' rx='2.8' ry='4.5' fill='#38bdf8'/>
+    <text id='bZzz' x='88' y='22' font-size='16' font-weight='bold' fill='#6366f1'>Zzz</text>
+  </svg>
+</div>
+
+<script src='app.js?v=17' onerror="alert('app.js ফাইল পাওয়া যায়নি। গিটহাবে app.js নামে ফাইল বানিয়েছেন?')"></script>
 </body>
-</html>
+        </html>
+  
