@@ -364,7 +364,7 @@ function setSubject(name) {
     if (/গণিত/.test(name)) bear('happy', name + '! হিসাব কষতে আমি ওস্তাদ! 🧮', 3200);
     else if (SINGLE) bear('dance', name + '! ওকে বস, সিঙ্গেল মার্কস মোড অন! 😎', 3200);
     else if (/বিজ্ঞান|পদার্থ|রসায়ন|জীববিজ্ঞান/.test(name)) bear('happy', 'বিজ্ঞানী পান্ডা রেডি! 🧪🐼', 3200);
-    else bear('happy', 'চলো ' + name + '-এর কাজ শুরু করি! 💧', 3000);
+    else bear('happy', 'চলো ' + name + '-এর কাজ শুরু করি! 🚀', 3000);
   }
 }
 
@@ -527,7 +527,7 @@ const POKE_ACTIONS = [
   ['eat', 'মচমচ... বাঁশটা যা মিষ্টি! খাবে নাকি? 🎋'],
   ['dance', 'একটু পান্ডা ড্যান্স হয়ে যাক! 💃🐼'],
   ['happy', 'টিপছো কেন? আমাকে কি রসগোল্লা মনে হয়? 😋'],
-  ['wave', 'ঠান্ডা পানির ফোঁটাগুলো কী সুন্দর, তাই না? 💧'],
+  ['wave', 'আমি কিন্তু ফাঁকিবাজি পছন্দ করি না, কাজ করো! 😎'],
   ['think', 'ভাবছি আজকে বিরিয়ানি খাবো নাকি বাঁশপাতা... 🤔'],
   ['tickle', 'আরে সুড়সুড়ি লাগে তো! হাহাহা 😆'],
   ['eat', 'কাজ করতে করতে খিদে পেয়ে গেছে! 🎋']
@@ -562,18 +562,10 @@ setInterval(function () {
   }
 }, 4000);
 
-// টাচ বা ক্লিক করলে পানির ঢেউ (Water Ripple) ও পান্ডা ওয়েভ
 document.addEventListener('click', function (e) {
   lastUserAction = Date.now();
-  if (e.clientX || e.clientY) {
-    const r = document.createElement('span');
-    r.className = 'water-ripple';
-    r.style.left = e.clientX + 'px';
-    r.style.top = e.clientY + 'px';
-    document.body.appendChild(r);
-    setTimeout(() => r.remove(), 750);
-  }
   if (bearBusy) return;
   if (e.target.closest && e.target.closest('#bear')) return;
   if (e.target.closest && e.target.closest('button')) bear('wave', '', 1400);
 });
+                           
