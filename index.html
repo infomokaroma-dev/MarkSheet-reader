@@ -1,165 +1,55 @@
 <!DOCTYPE html>
-<html lang='bn'>
+<html lang='bn' data-theme='light'>
 <head>
 <meta charset='UTF-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
+<!-- ফোনের Auto Dark Mode যেন অ্যাপের রঙ নষ্ট না করে তার জন্য মেটা ট্যাগ -->
+<meta name='color-scheme' content='light only'>
+<meta name='supported-color-schemes' content='light'>
 <title>মার্কশিট স্ক্যানার</title>
 <link rel='manifest' href='manifest.json'>
 <link rel='preconnect' href='https://fonts.googleapis.com'>
 <link href='https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap' rel='stylesheet'>
-<link rel='stylesheet' href='style.css?v=20'>
+<link rel='stylesheet' href='style.css?v=23'>
 </head>
 <body>
 
-<!-- পড়ালেখা রিলেটেড অ্যানিমেটেড ব্যাকগ্রাউন্ড আইকন -->
-<div id='studyBg' aria-hidden='true'>
-  <span class='stItem i1'>📚</span>
-  <span class='stItem i2'>🎓</span>
-  <span class='stItem i3'>✏️</span>
-  <span class='stItem i4'>📐</span>
-  <span class='stItem i5'>🔬</span>
-  <span class='stItem i6'>🧮</span>
-  <span class='stItem i7'>💯</span>
-  <span class='stItem i8'>📝</span>
-  <span class='stItem i9'>📖</span>
-  <span class='stItem i10'>✒️</span>
-</div>
-
-<div id='splash' onclick='this.remove()'>
-  <svg viewBox='0 0 320 140' width='86%' style='max-width: 340px'>
-    <text class='hw' x='160' y='92' text-anchor='middle'>
-      <tspan class='l1'>H</tspan><tspan class='l2'>e</tspan><tspan class='l3'>l</tspan><tspan class='l4'>l</tspan><tspan class='l5'>o</tspan>
-    </text>
-  </svg>
-  <div id='splashSub'>মার্কশিট স্ক্যানার</div>
-  <div class='sb sb1'>হ্যালো! 🐼</div>
-  <div class='sb sb2'>চলুন শুরু করি! ✨</div>
-  <svg class='sBear' viewBox='0 0 120 120'>
-    <g class='sArm'><ellipse cx='98' cy='88' rx='10' ry='18' fill='#1e293b'/></g>
-    <ellipse cx='60' cy='108' rx='34' ry='26' fill='#ffffff' stroke='#e2e8f0' stroke-width='2'/>
-    <ellipse cx='60' cy='112' rx='20' ry='17' fill='#f1f5f9'/>
-    <ellipse cx='22' cy='88' rx='10' ry='18' fill='#1e293b'/>
-    <circle cx='26' cy='28' r='14' fill='#1e293b'/>
-    <circle cx='26' cy='28' r='7' fill='#475569'/>
-    <circle cx='94' cy='28' r='14' fill='#1e293b'/>
-    <circle cx='94' cy='28' r='7' fill='#475569'/>
-    <circle cx='60' cy='56' r='38' fill='#ffffff' stroke='#e2e8f0' stroke-width='2'/>
-    <ellipse cx='44' cy='51' rx='11' ry='14' transform='rotate(-18 44 51)' fill='#1e293b'/>
-    <ellipse cx='76' cy='51' rx='11' ry='14' transform='rotate(18 76 51)' fill='#1e293b'/>
-    <circle cx='45' cy='49' r='4.5' fill='#fff'/>
-    <circle cx='75' cy='49' r='4.5' fill='#fff'/>
-    <circle cx='44' cy='47.5' r='2' fill='#1e293b'/>
-    <circle cx='74' cy='47.5' r='2' fill='#1e293b'/>
-    <circle cx='43' cy='46.5' r='1' fill='#fff'/>
-    <circle cx='73' cy='46.5' r='1' fill='#fff'/>
-    <ellipse cx='60' cy='62' rx='6' ry='4.2' fill='#1e293b'/>
-    <circle cx='33' cy='63' r='6' fill='#fda4af' opacity='.75'/>
-    <circle cx='87' cy='63' r='6' fill='#fda4af' opacity='.75'/>
-    <path class='sSmile' d='M52 71 Q60 79 68 71' stroke='#1e293b' stroke-width='2.5' fill='none' stroke-linecap='round'/>
-    <path class='sBig' d='M50 70 Q60 88 70 70 Z' fill='#ef4444'/>
-  </svg>
-</div>
-
-<div id='subOverlay'>
-  <div class='subCard'>
-    <h2>🎓 আজ কোন সাবজেক্ট নিয়ে কাজ করবেন?</h2>
-    <div id='subList'></div>
-    <div id='otherBox'>
-      <input type='text' id='subInput' placeholder='সাবজেক্টের নাম লিখুন'>
-      <button onclick='pickOther()'>এগিয়ে যান</button>
-    </div>
-    <button class='skip' onclick='subStart(false)'>এড়িয়ে যান</button>
-  </div>
-</div>
-
-<div class='mainDesk'>
-  <h1 id='title'>মার্কশিট স্ক্যানার</h1>
-  <button onclick='startCam()'>📷 ক্যামেরা চালু করুন</button>
-  <div id='camBox'>
-    <video id='video' autoplay playsinline muted></video>
-    <button onclick='snap()'>📸 ছবি তুলুন</button>
-    <button onclick='stopCam()'>✖ ক্যামেরা বন্ধ করুন</button>
-  </div>
-  <img id='preview' alt='তোলা ছবি'>
-  <p class='subNote'>অথবা গ্যালারি থেকে মার্কশিটের ছবি বেছে নিন:</p>
-  <input type='file' id='photo' accept='image/*' onchange='fileChosen()'>
-  <button onclick='scan()'>🔍 ছবি থেকে নম্বর পড়ুন</button>
-  <button onclick='addRow()'>✏️ নিজে টাইপ করে সারি যোগ করুন (টেস্ট)</button>
-  <button onclick='addSample()'>📋 নমুনা ডেটা দিন (টেস্ট)</button>
-  <button onclick='clearRows()'>🗑️ সব সারি মুছুন</button>
-  <div id='status'></div>
-</div>
-
-<div id='results'>
-  <h2 id='resTitle'>ফলাফল</h2>
-  <div id='rstatus'></div>
-  <div id='warn'></div>
-  <table id='tbl'>
-    <thead>
-      <tr>
-        <th>রোল</th>
-        <th>নাম</th>
-        <th>এমসিকিউ <button class='mini' id='vMcq' onclick='voiceCol(2)'>🔊</button></th>
-        <th>সিকিউ <button class='mini' id='vCq' onclick='voiceCol(3)'>🔊</button></th>
-        <th><span id='totLabel'>মোট</span> <button class='mini' id='vTot' onclick='voiceCol(4)'>🔊</button></th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <button onclick='copyCol(2)'>📋 এমসিকিউ কপি করুন</button>
-  <button onclick='copyCol(3)'>📋 সিকিউ কপি করুন</button>
-  <button onclick='copyCol(4)'>📋 মোট নম্বর কপি করুন</button>
-  <button onclick='downloadCsv()'>📥 এক্সেল (CSV) ডাউনলোড</button>
-  <button onclick='addRow()'>➕ সারি যোগ করুন</button>
-  <button onclick='backFromResults()'>⬅ নতুন ছবি / পেছনে যান</button>
-</div>
-
-<div id='bear' class='peek' onclick='pokePanda(event)' title='আমাকে ট্যাপ করো!'>
-  <div id='bearSay'></div>
-  <svg viewBox='0 0 120 120' width='105' height='105'>
-    <g id='bArm'>
-      <ellipse cx='98' cy='88' rx='10' ry='18' fill='#1e293b'/>
-      <g id='bBamboo'>
-        <rect x='94' y='52' width='5' height='36' rx='2.5' fill='#22c55e' transform='rotate(15 96 70)'/>
-        <ellipse cx='106' cy='58' rx='8' ry='3.5' fill='#16a34a' transform='rotate(-25 106 58)'/>
-        <ellipse cx='89' cy='62' rx='7' ry='3' fill='#16a34a' transform='rotate(30 89 62)'/>
-      </g>
+<!-- চকবোর্ড ডুডল ও নিচের বইয়ের তাকের ব্যাকগ্রাউন্ড -->
+<div id='chalkboardBg' aria-hidden='true'>
+  <svg class='chalkDoodles' viewBox='0 0 400 700' preserveAspectRatio='xMidYMid slice'>
+    <g stroke='rgba(255,255,255,0.28)' stroke-width='2' fill='none'>
+      <circle cx='35' cy='115' r='42'/>
+      <circle cx='35' cy='115' r='36' stroke-dasharray='3,6'/>
+      <polyline points='35,92 35,115 52,110' stroke-width='2.5'/>
     </g>
-    <ellipse cx='60' cy='108' rx='34' ry='26' fill='#ffffff' stroke='#cbd5e1' stroke-width='2'/>
-    <ellipse cx='60' cy='112' rx='20' ry='17' fill='#f1f5f9'/>
-    <ellipse cx='22' cy='88' rx='10' ry='18' fill='#1e293b'/>
-    <g id='bEars'>
-      <circle cx='26' cy='28' r='14' fill='#1e293b'/>
-      <circle cx='26' cy='28' r='7' fill='#475569'/>
-      <circle cx='94' cy='28' r='14' fill='#1e293b'/>
-      <circle cx='94' cy='28' r='7' fill='#475569'/>
+    <g transform='translate(85, 45)'>
+      <rect x='0' y='15' width='52' height='70' rx='4' stroke='rgba(255,255,255,0.25)' stroke-width='1.8' fill='none' transform='rotate(5)'/>
+      <line x1='12' y1='45' x2='40' y2='47' stroke='rgba(255,255,255,0.25)' stroke-width='1.8'/>
+      <line x1='12' y1='57' x2='38' y2='59' stroke='rgba(255,255,255,0.25)' stroke-width='1.8'/>
+      <line x1='12' y1='69' x2='34' y2='71' stroke='rgba(255,255,255,0.25)' stroke-width='1.8'/>
+      <circle cx='38' cy='22' r='24' fill='url(#bulbGlow)'/>
+      <path d='M28,32 Q22,12 38,6 Q54,12 48,32 Z' stroke='rgba(255,255,255,0.75)' stroke-width='2' fill='rgba(254,240,138,0.25)'/>
+      <rect x='32' y='32' width='12' height='7' rx='2' stroke='rgba(255,255,255,0.6)' stroke-width='1.5' fill='none'/>
     </g>
-    <circle cx='60' cy='56' r='38' fill='#ffffff' stroke='#cbd5e1' stroke-width='2'/>
-    <ellipse cx='44' cy='51' rx='11' ry='14' transform='rotate(-18 44 51)' fill='#1e293b'/>
-    <ellipse cx='76' cy='51' rx='11' ry='14' transform='rotate(18 76 51)' fill='#1e293b'/>
-    <g id='bEyes'>
-      <circle cx='45' cy='49' r='5' fill='#ffffff'/>
-      <circle cx='75' cy='49' r='5' fill='#ffffff'/>
-      <circle cx='44.5' cy='48.5' r='2.3' fill='#1e293b'/>
-      <circle cx='74.5' cy='48.5' r='2.3' fill='#1e293b'/>
-      <circle cx='43.5' cy='47.5' r='1.2' fill='#ffffff'/>
-      <circle cx='73.5' cy='47.5' r='1.2' fill='#ffffff'/>
+    <defs>
+      <radialGradient id='bulbGlow'>
+        <stop offset='0%' stop-color='rgba(254,249,195,0.65)'/>
+        <stop offset='100%' stop-color='rgba(254,249,195,0)'/>
+      </radialGradient>
+    </defs>
+    <path d='M240,85 Q210,85 205,92 Q200,98 225,95 Q185,95 160,98 L175,90 M160,98 L176,104' stroke='rgba(255,255,255,0.7)' stroke-width='3' fill='none' stroke-linecap='round'/>
+    <g transform='translate(260, 55)' stroke='rgba(255,255,255,0.26)' stroke-width='1.8' fill='none'>
+      <path d='M25,10 C10,10 5,22 10,32 C4,40 8,55 20,58 C20,66 30,68 32,60 L32,12 C32,8 28,10 25,10 Z'/>
+      <path d='M43,10 C58,10 63,22 58,32 C64,40 60,55 48,58 C48,66 38,68 36,60 L36,12 C36,8 40,10 43,10 Z'/>
     </g>
-    <g id='bSleepEyes'>
-      <path d='M39 50 Q45 55 51 50' stroke='#ffffff' stroke-width='2.5' fill='none' stroke-linecap='round'/>
-      <path d='M69 50 Q75 55 81 50' stroke='#ffffff' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+    <g transform='translate(330, 65)' stroke='rgba(148,163,184,0.45)' stroke-width='2.2' fill='none'>
+      <line x1='5' y1='65' x2='45' y2='65' stroke-width='3.5'/>
+      <path d='M30,65 L35,45 C42,35 35,20 22,25'/>
+      <rect x='14' y='10' width='8' height='24' transform='rotate(25 18 22)' fill='rgba(244,63,94,0.35)'/>
+      <line x1='12' y1='46' x2='32' y2='46'/>
     </g>
-    <ellipse cx='60' cy='62' rx='6' ry='4.2' fill='#1e293b'/>
-    <circle cx='33' cy='63' r='6.5' fill='#fda4af' opacity='.8'/>
-    <circle cx='87' cy='63' r='6.5' fill='#fda4af' opacity='.8'/>
-    <path id='bSmile' d='M52 71 Q60 79 68 71' stroke='#1e293b' stroke-width='2.5' fill='none' stroke-linecap='round'/>
-    <path id='bSad' d='M52 77 Q60 69 68 77' stroke='#1e293b' stroke-width='2.5' fill='none' stroke-linecap='round'/>
-    <path id='bBig' d='M50 70 Q60 88 70 70 Z' fill='#ef4444'/>
-    <ellipse id='bTear' cx='43' cy='60' rx='2.8' ry='4.5' fill='#38bdf8'/>
-    <text id='bZzz' x='88' y='22' font-size='16' font-weight='bold' fill='#6366f1'>Zzz</text>
-  </svg>
-</div>
-
-<script src='app.js?v=20' onerror="alert('app.js ফাইল পাওয়া যায়নি। গিটহাবে app.js নামে ফাইল বানিয়েছেন?')"></script>
-</body>
-</html>
+    <g transform='translate(45, 185)' stroke='rgba(255,255,255,0.28)' stroke-width='2' fill='none'>
+      <circle cx='22' cy='22' r='18'/>
+      <line x1='35' y1='35' x2='62' y2='56' stroke-width='4' stroke-linecap='round'/>
+    </g
+      
