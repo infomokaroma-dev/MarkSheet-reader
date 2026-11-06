@@ -6,7 +6,7 @@ const NL = String.fromCharCode(10);
 const BOM = String.fromCharCode(65279);
 const QT = String.fromCharCode(34);
 
-// Built-in API key split into chunks to bypass automated scanners
+// Built-in API key split into chunks
 const _kParts = [
   'AQ.Ab8RN6',
   'JMUGZqK3e',
@@ -36,7 +36,6 @@ let errShown = false;
 let handlingPop = false;
 const hasTTS = !!window.speechSynthesis;
 
-// SSC Common, Science, Arts, and Commerce Subjects
 const SUBJECT_GROUPS = [
   {
     title: '📌 আবশ্যিক (কমন) বিষয়',
@@ -106,7 +105,7 @@ window.addEventListener('popstate', function () {
 
   if (resEl.classList.contains('show')) {
     backFromResults(true);
-  } else if (camEl.style.display === 'block') {
+  } else if (camEl.classList.contains('open')) {
     stopCam(true);
   } else if (!subEl.classList.contains('show')) {
     subEl.classList.add('show');
@@ -173,7 +172,7 @@ async function startCam() {
       audio: false
     });
     document.getElementById('video').srcObject = stream;
-    document.getElementById('camBox').style.display = 'block';
+    document.getElementById('camBox').classList.add('open');
     pushAppState('cam');
     setStatus('ক্যামেরা চালু হয়েছে। ১ম পৃষ্ঠার ছবি তুলুন, এরপর সাথে সাথেই ২য় পৃষ্ঠার ছবিও তুলতে পারবেন।');
     bear('happy', 'চিজ! এক এক করে সব পৃষ্ঠার ছবি তুলো 📸', 3000);
@@ -188,7 +187,7 @@ function stopCam(fromHistory) {
     stream.getTracks().forEach(t => t.stop());
     stream = null;
   }
-  document.getElementById('camBox').style.display = 'none';
+  document.getElementById('camBox').classList.remove('open');
   if (pages.length && !fromHistory) {
     setStatus('মোট ' + pages.length + 'টি পৃষ্ঠার ছবি তোলা হয়েছে। এবার "সব পৃষ্ঠা থেকে নম্বর পড়ুন" চাপুন।');
   }
@@ -615,4 +614,5 @@ async function voiceCol(col) {
   stopFlag = false;
   setVoiceBtns();
   if (!hasTTS) {
-    aler
+    alert('এই ব্রাউজারে পড়ে শোনানোর সুবিধা নেই। ক্রোম ব্রাউজারে খুলুন।');
+    speaking =
