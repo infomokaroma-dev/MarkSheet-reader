@@ -2,22 +2,21 @@
 <html lang='bn' data-theme='light'>
 <head>
 <meta charset='UTF-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
 <meta name='color-scheme' content='light only'>
 <meta name='supported-color-schemes' content='light'>
-<title>মার্কশিট স্ক্যানার — Spatial UI</title>
+<title>মার্কশিট স্ক্যানার — Ultra Smooth</title>
 <link rel='manifest' href='manifest.json'>
 <link rel='preconnect' href='https://fonts.googleapis.com'>
 <link href='https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap' rel='stylesheet'>
-<link rel='stylesheet' href='style.css?v=24'>
+<link rel='stylesheet' href='style.css?v=25'>
 </head>
 <body>
 
-<!-- Spatial Environment: Ambient 3D Light Orbs + Chalkboard Backdrop -->
+<!-- GPU-Accelerated Spatial Chalkboard Environment -->
 <div id='chalkboardBg' aria-hidden='true'>
   <div class='spatialOrb orb1'></div>
   <div class='spatialOrb orb2'></div>
-  <div class='spatialOrb orb3'></div>
 
   <svg class='chalkDoodles' viewBox='0 0 400 700' preserveAspectRatio='xMidYMid slice'>
     <g stroke='rgba(255,255,255,0.22)' stroke-width='2' fill='none'>
@@ -145,8 +144,8 @@
   </svg>
 </div>
 
-<!-- Spatial Modal Window: Subject Selection -->
-<div id='subOverlay'>
+<!-- Smooth Spatial Modal Window: Subject Selection -->
+<div id='subOverlay' class='show'>
   <div class='subCard spatialWindow'>
     <div class='spatialGrabber'></div>
     <h2>🎓 আজ কোন সাবজেক্ট নিয়ে কাজ করবেন?</h2>
@@ -164,7 +163,7 @@
   <div class='spatialTopBar'>
     <span class='spatialDot'></span>
     <div class='spatialGrabber'></div>
-    <span class='spatialTag'>SPATIAL OS</span>
+    <span class='spatialTag'>120FPS SMOOTH</span>
   </div>
   <h1 id='title'>মার্কশিট স্ক্যানার</h1>
   <button onclick='openSubOverlay()'>📚 সাবজেক্ট পরিবর্তন করুন</button>
@@ -189,7 +188,7 @@
   <div class='spatialBottomBar'></div>
 </div>
 
-<!-- Spatial Results Sheet -->
+<!-- Smooth Spatial Results Sheet -->
 <div id='results'>
   <div class='resultsSpatialWrap spatialWindow'>
     <div class='spatialGrabber'></div>
@@ -265,6 +264,7 @@
   </svg>
 </div>
 
-<script src='app.js?v=24' onerror="alert('app.js ফাইল পাওয়া যায়নি। গিটহাবে app.js নামে ফাইল বানিয়েছেন?')"></script>
+<script src='app.js?v=25' onerror="alert('app.js ফাইল পাওয়া যায়নি। গিটহাবে app.js নামে ফাইল বানিয়েছেন?')"></script>
 </body>
-</html>
+      </html>
+      
