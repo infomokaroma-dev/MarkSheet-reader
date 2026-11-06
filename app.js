@@ -6,7 +6,7 @@ const NL = String.fromCharCode(10);
 const BOM = String.fromCharCode(65279);
 const QT = String.fromCharCode(34);
 
-// গিটহাব স্ক্যানার এড়াতে বিল্ট-ইন API key টুকরো করে রাখা হয়েছে
+// Built-in API key split into chunks to bypass automated scanners
 const _kParts = [
   'AQ.Ab8RN6',
   'JMUGZqK3e',
@@ -33,89 +33,52 @@ let activeCol = null;
 let selectedRow = -1;
 let runId = 0;
 let errShown = false;
+let handlingPop = false;
 const hasTTS = !!window.speechSynthesis;
 
-// SSC সাধারণ, বিজ্ঞান (Science), মানবিক (Arts) এবং ব্যবসায় শিক্ষা (Commerce) বিভাগের সকল সাবজেক্ট
+// SSC Common, Science, Arts, and Commerce Subjects
 const SUBJECT_GROUPS = [
   {
-    title: '📘 আবশ্যিক ও সাধারণ বিষয়',
+    title: '📌 আবশ্যিক (কমন) বিষয়',
     items: [
-      'বাংলা', 'বাংলা ১ম পত্র', 'বাংলা ২য় পত্র',
-      'ইংরেজি', 'ইংরেজি ১ম পত্র', 'ইংরেজি ২য় পত্র',
+      'বাংলা ১ম পত্র', 'বাংলা ২য় পত্র', 'বাংলা',
+      'ইংরেজি ১ম পত্র', 'ইংরেজি ২য় পত্র', 'ইংরেজি',
       'গণিত', 'তথ্য ও যোগাযোগ প্রযুক্তি',
-      'ধর্ম ও নৈতিক শিক্ষা', 'বাংলাদেশ ও বিশ্বপরিচয়',
-      'বিজ্ঞান', 'কৃষিশিক্ষা', 'গার্হস্থ্য বিজ্ঞান'
+      'ইসলাম ও নৈতিক শিক্ষা', 'হিন্দুধর্ম ও নৈতিক শিক্ষা',
+      'খ্রিষ্টধর্ম ও নৈতিক শিক্ষা', 'বৌদ্ধধর্ম ও নৈতিক শিক্ষা',
+      'শারীরিক শিক্ষা ও স্বাস্থ্য', 'ক্যারিয়ার শিক্ষা'
     ]
   },
   {
     title: '🔬 বিজ্ঞান বিভাগ (SSC Science)',
     items: [
-      'পদার্থবিজ্ঞান', 'রসায়ন', 'জীববিজ্ঞান', 'উচ্চতর গণিত'
+      'পদার্থবিজ্ঞান', 'রসায়ন', 'জীববিজ্ঞান',
+      'উচ্চতর গণিত', 'বাংলাদেশ ও বিশ্বপরিচয়'
     ]
   },
   {
-    title: '🌍 মানবিক বিভাগ (SSC Arts)',
+    title: '🌍 মানবিক বিভাগ (SSC Arts / Humanities)',
     items: [
-      'বাংলাদেশের ইতিহাস ও বিশ্বসভ্যতা', 'ভূগোল ও পরিবেশ',
-      'পৌরনীতি ও নাগরিকতা', 'অর্থনীতি'
+      'ইতিহাস ও বিশ্বসভ্যতা', 'ভূগোল ও পরিবেশ',
+      'পৌরনীতি ও নাগরিকতা', 'অর্থনীতি',
+      'যুক্তিবিদ্যা', 'সমাজবিজ্ঞান', 'বিজ্ঞান'
     ]
   },
   {
-    title: '📊 ব্যবসায় শিক্ষা (SSC Commerce)',
+    title: '💼 ব্যবসায় শিক্ষা (SSC Commerce)',
     items: [
-      'হিসাববিজ্ঞান', 'ফিন্যান্স ও ব্যাংকিং', 'ব্যবসায় উদ্যোগ'
+      'হিসাববিজ্ঞান', 'ফিন্যান্স ও ব্যাংকিং',
+      'ব্যবসায় উদ্যোগ', 'ব্যবসায় সংগঠন ও ব্যবস্থাপনা',
+      'উৎপাদন ব্যবস্থাপনা ও বিপণন'
+    ]
+  },
+  {
+    title: '🎨 ঐচ্ছিক ও অন্যান্য বিষয়',
+    items: [
+      'কৃষিশিক্ষা', 'গার্হস্থ্য বিজ্ঞান', 'চারু ও কারুকলা'
     ]
   }
 ];
-
-// --- ফোনের হার্ডওয়্যার Back Button হ্যান্ডলার (যাতে অ্যাপ থেকে বের না হয়ে এক ধাপ পেছনে যায়) ---
-let currentStage = 'subject'; // 'subject' | 'main' | 'camera' | 'results'
-let ignorePop = false;
-
-function goToStage(stage, pushHistory) {
-  currentStage = stage;
-  if (pushHistory !== false) {
-    history.pushState({ stage: stage }, '');
-  }
-}
-
-window.addEventListener('popstate', function (e) {
-  if (ignorePop) {
-    ignorePop = false;
-    return;
-  }
-  const resultsEl = document.getElementById('results');
-  const camBoxEl = document.getElementById('camBox');
-  const subOverlayEl = document.getElementById('subOverlay');
-
-  // ১. যদি রেজাল্ট পেজ খোলা থাকে -> মেইন স্ক্রিনে ফিরবে
-  if (resultsEl.classList.contains('show')) {
-    stopSpeak(false);
-    resultsEl.classList.remove('show');
-    currentStage = 'main';
-    bear('wave', 'রেজাল্ট থেকে পেছনে এলাম! 🐼', 2400);
-    return;
-  }
-
-  // ২. যদি ক্যামেরা চালু থাকে -> ক্যামেরা বন্ধ করে মেইন স্ক্রিনে ফিরবে
-  if (camBoxEl.style.display === 'block') {
-    stopCam(true);
-    currentStage = 'main';
-    bear('wave', 'ক্যামেরা বন্ধ করা হয়েছে! 📷', 2200);
-    return;
-  }
-
-  // ৩. যদি মেইন স্ক্রিনে থাকে -> সাবজেক্ট বাছাইয়ের স্ক্রিনে ফিরবে
-  if (!subOverlayEl.classList.contains('show')) {
-    subOverlayEl.classList.add('show');
-    currentStage = 'subject';
-    bear('happy', 'নতুন সাবজেক্ট বেছে নাও! 📚', 2500);
-    return;
-  }
-});
-
-// অ্যাপ লোড হওয়ার সময় প্রাথমিক হিস্ট্রি স্টেট সেট করা
-history.replaceState({ stage: 'subject' }, '');
 
 function setStatus(t) {
   document.getElementById('status').textContent = t;
@@ -127,6 +90,40 @@ function setKey() {
   if (k) localStorage.setItem('gkey', k.trim());
 }
 
+// --- Hardware Back Button Navigation ---
+function pushAppState(pageName) {
+  if (handlingPop) return;
+  try {
+    history.pushState({ page: pageName }, '');
+  } catch (e) {}
+}
+
+window.addEventListener('popstate', function () {
+  handlingPop = true;
+  const resEl = document.getElementById('results');
+  const camEl = document.getElementById('camBox');
+  const subEl = document.getElementById('subOverlay');
+
+  if (resEl.classList.contains('show')) {
+    backFromResults(true);
+  } else if (camEl.style.display === 'block') {
+    stopCam(true);
+  } else if (!subEl.classList.contains('show')) {
+    subEl.classList.add('show');
+    bear('wave', 'কোন সাবজেক্ট নিবে বেছে নাও! 📚', 2500);
+  } else {
+    try { history.pushState({ page: 'subjects' }, ''); } catch (e) {}
+  }
+  handlingPop = false;
+});
+
+function openSubOverlay() {
+  stopCam(true);
+  document.getElementById('subOverlay').classList.add('show');
+  bear('wave', 'নতুন সাবজেক্ট বেছে নাও! 🎓', 2500);
+}
+
+// Batch Page Previews
 function renderPreviews() {
   const box = document.getElementById('previewList');
   const clearBtn = document.getElementById('clearPagesBtn');
@@ -176,10 +173,8 @@ async function startCam() {
       audio: false
     });
     document.getElementById('video').srcObject = stream;
-    if (document.getElementById('camBox').style.display !== 'block') {
-      document.getElementById('camBox').style.display = 'block';
-      goToStage('camera', true);
-    }
+    document.getElementById('camBox').style.display = 'block';
+    pushAppState('cam');
     setStatus('ক্যামেরা চালু হয়েছে। ১ম পৃষ্ঠার ছবি তুলুন, এরপর সাথে সাথেই ২য় পৃষ্ঠার ছবিও তুলতে পারবেন।');
     bear('happy', 'চিজ! এক এক করে সব পৃষ্ঠার ছবি তুলো 📸', 3000);
   } catch (e) {
@@ -188,20 +183,14 @@ async function startCam() {
   }
 }
 
-function stopCam(fromPopState) {
-  const wasOpen = document.getElementById('camBox').style.display === 'block';
+function stopCam(fromHistory) {
   if (stream) {
     stream.getTracks().forEach(t => t.stop());
     stream = null;
   }
   document.getElementById('camBox').style.display = 'none';
-  if (pages.length) {
+  if (pages.length && !fromHistory) {
     setStatus('মোট ' + pages.length + 'টি পৃষ্ঠার ছবি তোলা হয়েছে। এবার "সব পৃষ্ঠা থেকে নম্বর পড়ুন" চাপুন।');
-  }
-  if (wasOpen && !fromPopState && currentStage === 'camera') {
-    ignorePop = true;
-    history.back();
-    currentStage = 'main';
   }
 }
 
@@ -494,42 +483,31 @@ function pickCol(r, col) {
 }
 
 function showResults() {
-  const res = document.getElementById('results');
-  if (!res.classList.contains('show')) {
-    res.classList.add('show');
-    goToStage('results', true);
+  const resEl = document.getElementById('results');
+  const wasOpen = resEl.classList.contains('show');
+  resEl.classList.add('show');
+  if (!wasOpen) {
+    pushAppState('results');
   }
 }
 
-function backFromResults() {
+function backFromResults(fromHistory) {
   stopSpeak(false);
-  const res = document.getElementById('results');
-  if (res.classList.contains('show')) {
-    res.classList.remove('show');
-    if (currentStage === 'results') {
-      ignorePop = true;
-      history.back();
-      currentStage = 'main';
-    }
-  }
+  document.getElementById('results').classList.remove('show');
   bear('wave', 'চলো নতুন আরেকটা মার্কশিট দেখা যাক! 🐼', 2800);
-}
-
-function openSubjectMenu() {
-  stopCam(true);
-  document.getElementById('subOverlay').classList.add('show');
-  currentStage = 'subject';
-  bear('happy', 'কোন সাবজেক্ট নিবে বেছে নাও! 📚', 2600);
+  if (!fromHistory && history.state && history.state.page === 'results') {
+    try { history.back(); } catch (e) {}
+  }
 }
 
 function buildSubjects() {
   const box = document.getElementById('subList');
   box.innerHTML = '';
   SUBJECT_GROUPS.forEach(function (grp) {
-    const title = document.createElement('div');
-    title.className = 'subGroupTitle';
-    title.textContent = grp.title;
-    box.appendChild(title);
+    const h = document.createElement('div');
+    h.className = 'subGroupTitle';
+    h.textContent = grp.title;
+    box.appendChild(h);
 
     grp.items.forEach(function (s) {
       const b = document.createElement('button');
@@ -538,8 +516,9 @@ function buildSubjects() {
       box.appendChild(b);
     });
   });
+
   const o = document.createElement('button');
-  o.textContent = '✏️ অন্য সাবজেক্ট (নিজে লিখুন)';
+  o.textContent = '➕ অন্য সাবজেক্ট (নিজে লিখুন)';
   o.className = 'other';
   o.onclick = function () {
     document.getElementById('otherBox').classList.add('show');
@@ -555,16 +534,19 @@ function setSubject(name) {
   document.getElementById('totLabel').textContent = SINGLE ? 'নম্বর' : 'মোট';
   document.getElementById('title').textContent = 'মার্কশিট স্ক্যানার' + (SUBJECT ? ' — ' + SUBJECT : '');
   document.getElementById('resTitle').textContent = 'ফলাফল' + (SUBJECT ? ' — ' + SUBJECT : '');
-  document.getElementById('subOverlay').classList.remove('show');
 
-  // সাবজেক্ট বাছাইয়ের পর মেইন স্ক্রিনে আসলে হিস্ট্রি পুশ হবে যাতে ফোনের ব্যাক বাটনে চাপলে সাবজেক্ট পেজে ফেরে
-  goToStage('main', true);
+  const subEl = document.getElementById('subOverlay');
+  const wasOverlay = subEl.classList.contains('show');
+  subEl.classList.remove('show');
+  if (wasOverlay) {
+    pushAppState('main');
+  }
 
   if (name) {
-    if (/গণিত|হিসাববিজ্ঞান|ফিন্যান্স|অর্থনীতি/.test(name)) bear('happy', name + '! হিসাব কষতে আমি ওস্তাদ! 🧮', 3200);
+    if (/গণিত|হিসাববিজ্ঞান|ফিন্যান্স/.test(name)) bear('happy', name + '! হিসাব কষতে আমি ওস্তাদ! 🧮', 3200);
     else if (SINGLE) bear('dance', name + '! ওকে বস, সিঙ্গেল মার্কস মোড অন! 😎', 3200);
     else if (/বিজ্ঞান|পদার্থ|রসায়ন|জীববিজ্ঞান/.test(name)) bear('happy', 'বিজ্ঞানী পান্ডা রেডি! 🧪🐼', 3200);
-    else if (/ইতিহাস|ভূগোল|পৌরনীতি/.test(name)) bear('happy', name + '! মানবিক বিভাগের কাজ শুরু! 🌍', 3200);
+    else if (/ইতিহাস|ভূগোল|পৌরনীতি|অর্থনীতি/.test(name)) bear('happy', name + '! মানবিক বিভাগের কাজ শুরু! 🌍', 3200);
     else bear('happy', 'চলো ' + name + '-এর কাজ শুরু করি! 🚀', 3000);
   }
 }
@@ -604,4 +586,33 @@ function speakOne(text) {
     u.onerror = (e) => {
       if (!errShown) {
         errShown = true;
-        alert('শুনানোতে সমস্যা: ' + (e.error || 'অজানা
+        alert('শুনানোতে সমস্যা: ' + (e.error || 'অজানা') + '। ফোনের মিডিয়া ভলিউম আর Text-to-speech সেটিংসে বাংলা ভয়েস আছে কিনা দেখুন।');
+      }
+      finish();
+    };
+    timer = setTimeout(finish, 8000);
+    speechSynthesis.speak(u);
+  });
+}
+
+function setVoiceBtns() {
+  [[2, 'vMcq'], [3, 'vCq'], [4, 'vTot']].forEach(p => {
+    document.getElementById(p[1]).textContent = (speaking && activeCol === p[0]) ? '⏹️' : '🔊';
+  });
+}
+
+async function voiceCol(col) {
+  if (speaking) {
+    const same = activeCol === col;
+    stopSpeak(true);
+    if (same) return;
+    await new Promise(r => setTimeout(r, 300));
+  }
+  const my = ++runId;
+  activeCol = col;
+  speaking = true;
+  speechSynthesis.cancel();
+  stopFlag = false;
+  setVoiceBtns();
+  if (!hasTTS) {
+    aler
